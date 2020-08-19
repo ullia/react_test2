@@ -1,32 +1,41 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './Textarea.scss';
 
-const Input = ({ status }) => {
-    const [ textarea, setTextarea ] = useState({
-        placehold : '텍스트를 입력하세요',
-        value : '',
-        textcount : 0,
-        active : false,
-    });
-    const { placehold, value, textcount, active } = textarea;
+const Textarea = ({ status }) => {
+    // const [ textAreaProps, setTextAreaProps ] = useState({
+    //     placeholder : '텍스트를 입력하세요',
+    //     value : '',
+    //     textcount : 0,
+    //     active : false,
+    // });
+
+    const placeholder = '텍스트를 입력하세요';
+    const [value, setValue] = useState('');
+    const [textcount, setTextcount] = useState(0);
+    const [active, setActive] = useState(false);
+    
+    // const { placeholder, value, textcount, active } = textAreaProps;
 
     useEffect (() => {
         // console.log(textcount);
-        setTextarea({
-            ...textarea, 
-            textcount: value.length,
-            active: (textcount > 0 ? true : false),
-        });
+        // setTextAreaProps({
+        //     ...textAreaProps, 
+        //     textcount: value.length,
+        //     active: (textcount > 0 ? true : false),
+        // });
+        setTextcount(value.length);
+        setActive(textcount > 0 ? true : false);
     }, [value, textcount]);
 
     const onChange = useCallback((e) => {
         e.preventDefault();
 
-        setTextarea({
-            ...textarea, 
-            value : e.target.value,
-        });
-    }, [textarea]);
+        // setTextAreaProps({
+        //     ...textAreaProps, 
+        //     value : e.target.value,
+        // });
+        setValue(e.target.value);
+    }, [value]);
 
     const txtBtn = <button className="textarea__button" type="button">Save</button>;
 
@@ -34,7 +43,7 @@ const Input = ({ status }) => {
         <div className={"form__textarea " + (status ? status : "")}>
             <div className={"textarea__wrap " + (active ? active : "")}>
                 <textarea name="textarea__box" id="textarea__box" rows="8" 
-                    placeholder={placehold}
+                    placeholder={placeholder}
                     value={value}
                     onChange={onChange}
                     disabled={status}
@@ -47,4 +56,4 @@ const Input = ({ status }) => {
     )
 }
 
-export default Input;
+export default Textarea;
